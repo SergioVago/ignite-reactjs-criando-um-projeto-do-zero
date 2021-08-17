@@ -1,1 +1,15 @@
-// TODO
+.header {
+  height: 105px;
+
+  display    : flex;
+  align-items: center;
+
+  img {
+    cursor: pointer;
+  }
+}
+
+.home {
+  margin-top   : 3rem;
+  margin-bottom: 3rem;
+}
