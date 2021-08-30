@@ -7,7 +7,6 @@ import Prismic from '@prismicio/client';
 import { useRouter } from 'next/router';
 import { v4 as uuid } from 'uuid';
 import { useMemo } from 'react';
-import Link from 'next/link';
 import Header from '../../components/Header';
 
 import { getPrismicClient } from '../../services/prismic';
