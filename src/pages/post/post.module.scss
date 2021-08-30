@@ -1,1 +1,66 @@
-// TODO
+.banner {
+  width : 100%;
+  height: 100%;
+}
+
+.post {
+  margin-top: 5rem;
+
+  .postHeader {
+    color: var(--heading);
+
+    font-size     : 3rem;
+    font-weight   : 700;
+    line-height   : 3.625rem;
+    letter-spacing: -0.03125rem;
+  }
+}
+
+.postContent {
+  margin-top: 4rem;
+
+  .heading {
+    color         : var(--heading);
+    font-size     : 2.25rem;
+    font-weight   : 700;
+    line-height   : 3.625rem;
+    letter-spacing: -0.03125rem;
+
+    margin-top   : 2.25rem;
+    margin-bottom: 2.25rem;
+  }
+
+  p,
+  ul,
+  li {
+    font-size  : 1.125rem;
+    font-weight: 400;
+    line-height: 1.5625rem;
+
+    margin-bottom: 1.125rem;
+  }
+
+  font-family   : Inter;
+  font-size     : 18px;
+  font-style    : normal;
+  font-weight   : 700;
+  line-height   : 25px;
+  letter-spacing: 0em;
+  text-align    : justified;
+
+  font-family   : Inter;
+  font-size     : 18px;
+  font-style    : normal;
+  font-weight   : 400;
+  line-height   : 25px;
+  letter-spacing: 0em;
+  text-align    : justified;
+
+  font-family   : Inter;
+  font-size     : 36px;
+  font-style    : normal;
+  font-weight   : 700;
+  line-height   : 50px;
+  letter-spacing: 0em;
+  text-align    : justified;
+}
