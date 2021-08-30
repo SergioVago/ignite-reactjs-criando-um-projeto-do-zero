@@ -7,12 +7,15 @@ import Prismic from '@prismicio/client';
 import { useRouter } from 'next/router';
 import { v4 as uuid } from 'uuid';
 import { useMemo } from 'react';
+import Link from 'next/link';
 import Header from '../../components/Header';
 
 import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
+import Comments from '../../components/Comments';
+import ExitPreviewButton from '../../components/ExitPreviewButton';
 
 interface Content {
   heading: string;
@@ -23,6 +26,7 @@ interface Content {
 
 interface Post {
   first_publication_date: string | null;
+  last_publication_date: string | null;
   uid: string;
   data: {
     title: string;
@@ -37,9 +41,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps) {
+export default function Post({ post, preview }: PostProps) {
   const router = useRouter();
 
   const readTime = useMemo(() => {
@@ -68,6 +73,16 @@ export default function Post({ post }: PostProps) {
     });
   }, [post.first_publication_date]);
 
+  const parsedLastPublicationDate = useMemo(() => {
+    return format(
+      new Date(post.first_publication_date),
+      "'* editado em' dd MMM yyyy, 'às' hh:mm",
+      {
+        locale: ptBR,
+      }
+    );
+  }, [post.first_publication_date]);
+
   if (router.isFallback) {
     return <div>Carregando...</div>;
   }
@@ -91,6 +106,12 @@ export default function Post({ post }: PostProps) {
             <span>{readTime} min</span>
           </div>
 
+          <div className={`${commonStyles.info} ${styles.lastPublicationDate}`}>
+            <time>
+              <i>{parsedLastPublicationDate}</i>
+            </time>
+          </div>
+
           <section>
             {post.data.content.map(content => {
               return (
@@ -108,6 +129,24 @@ export default function Post({ post }: PostProps) {
           </section>
         </div>
       </main>
+
+      <footer className={`${commonStyles.container} ${styles.footer}`}>
+        <hr />
+        <div className={styles.nestedPosts}>
+          <div>
+            <p>Como utilizar Hooks</p>
+            <a>Post Anterior</a>
+          </div>
+          <div className={styles.nextPost}>
+            <p>Criando um app CRA do Zero</p>
+            <a>Próximo Post</a>
+          </div>
+        </div>
+
+        <Comments />
+
+        {preview && <ExitPreviewButton />}
+      </footer>
     </>
   );
 }
@@ -132,7 +171,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const { slug } = params;
 
   const prismic = getPrismicClient();
@@ -148,11 +190,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       title: response.data.title,
       subtitle: response.data.subtitle,
     },
+    last_publication_date: response.last_publication_date,
   };
 
   return {
     props: {
       post,
+      preview,
     },
     revalidate: 1, // 1 minute
   };

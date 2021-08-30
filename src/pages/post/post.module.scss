@@ -44,3 +44,44 @@
     color: var(--highlight);
   }
 }
+
+
+.footer {
+  margin-top: 3.75rem;
+
+
+  hr {
+    background-color: var(--body);
+    opacity         : 0.1;
+
+    margin-bottom: 3.0625rem;
+  }
+}
+
+.lastPublicationDate {
+  padding-top: 1rem;
+}
+
+.nestedPosts {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+
+  cursor: pointer;
+
+  margin-bottom: 5rem;
+
+  p {
+    font-size    : 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  a {
+    font-size: 1rem;
+    color    : var(--highlight);
+  }
+
+  .nextPost {
+    text-align: right;
+  }
+}
